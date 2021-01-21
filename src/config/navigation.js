@@ -4,13 +4,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import SignUp from '../screens/signUp';
 import Verification from '../screens/verification';
-// function HomeScreen() {
-//   return (
-//     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-//       <Text>Home Screen</Text>
-//     </View>
-//   );
-// }
+import Home from '../screens/home';
 
 const Stack = createStackNavigator();
 
@@ -18,14 +12,19 @@ function AppNavigation({navigation}) {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen
+        {/* <Stack.Screen
           name="SignUp"
           component={SignUp}
           options={{headerShown: false}}
-        />
-        <Stack.Screen
+        /> */}
+        {/* <Stack.Screen
           name="Verification"
           component={Verification}
+          options={{headerShown: false}}
+        /> */}
+        <Stack.Screen
+          name="Home"
+          component={Home}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

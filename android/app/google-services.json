@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "431614982094",
+    "project_id": "bloodology-m",
+    "storage_bucket": "bloodology-m.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:431614982094:android:b49dfec73192b36d47dd9f",
+        "android_client_info": {
+          "package_name": "com.bloodology"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "431614982094-aj1g2vkcpd6kpc9thv6337qo4fnfsohp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCExYjsDHEmIDM45NJzegou3Iset0ZNLMo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "431614982094-aj1g2vkcpd6kpc9thv6337qo4fnfsohp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
