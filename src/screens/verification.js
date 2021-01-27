@@ -10,7 +10,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import VerifyOtp from '../assets/otp.svg';
 
-const verification = () => {
+const verification = ({navigation}) => {
   return (
     <View style={styles.container}>
       <View style={styles.section1}>
@@ -72,7 +72,10 @@ const verification = () => {
             <Text style={styles.resend}>Resend OTP</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.verifyBtn} activeOpacity={0.8}>
+        <TouchableOpacity
+          style={styles.verifyBtn}
+          activeOpacity={0.8}
+          onPress={() => navigation.navigate('Login')}>
           <Text style={styles.verifyTxt}>Verify</Text>
         </TouchableOpacity>
       </View>
@@ -86,7 +89,7 @@ const styles = StyleSheet.create({
     flex: 1,
     // justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f07279',
+    backgroundColor: '#f23c5a',
   },
   otpText: {
     fontSize: 25,
@@ -96,7 +99,7 @@ const styles = StyleSheet.create({
   },
   section1: {
     flex: 1,
-    backgroundColor: '#f07279',
+    // backgroundColor: '#f07279',
     // height: windowHeight / 2,
     // width: windowWidth,
     justifyContent: 'space-evenly',
@@ -126,7 +129,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     // borderBottomWidth: 1,
     // borderBottomColor: '#1e2d50',
-    backgroundColor: '#f79ca4',
+    backgroundColor: '#fda1b0',
     fontSize: 23,
     borderRadius: 10,
     color: '#f5f5f5',
@@ -141,7 +144,7 @@ const styles = StyleSheet.create({
   },
   verifyBtn: {
     width: '60%',
-    backgroundColor: '#f79ca4',
+    backgroundColor: '#fda1b0',
     // paddingHorizontal: '10%',
     paddingVertical: '2%',
     alignItems: 'center',

@@ -1,83 +1,60 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   StyleSheet,
   View,
   Text,
-  Dimensions,
+  ScrollView,
   TextInput,
   TouchableOpacity,
-  Button,
+  Dimensions,
 } from 'react-native';
-import database from '@react-native-firebase/database';
-import auth from '@react-native-firebase/auth';
+import Icon from 'react-native-vector-icons/AntDesign';
+import User from 'react-native-vector-icons/Feather';
+const windowHeight = Dimensions.get('window').height;
+const windowWidth = Dimensions.get('window').width;
+
+// export const Card = () => {
+//   return;
+// };
+
 const Home = () => {
-  const [number, setNumber] = useState('+923068471693');
-  const [password, setPassword] = useState('');
-  const [confirm, setConfirm] = useState(null);
-  const [code, setCode] = useState('');
-
-  const signInWithPhoneNumber = async (phoneNumber) => {
-    const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
-    setConfirm(confirmation);
-  };
-  const confirmCode = async () => {
-    try {
-      await confirm.confirm(code);
-      alert('user signed in successfully');
-    } catch (err) {
-      console.log('Invalid code.');
-    }
-  };
-  // const save_data = () => {
-  // let user = {
-  //   number,
-  //   password,
-  // };
-  // console.log(user);
-  // database().ref('/').child('users').push(user);
-
-  // auth()
-  //   .signInWithPhoneNumber(number)
-  //   .then(console.log('confirmResult')) // save confirm result to use with the manual verification code)
-  //   .catch((error) => error);
-  // };
-
-  if (!confirm) {
-    return (
-      <View style={styles.container}>
-        <Text>Otp verification</Text>
-        <Button
-          title="phone number sign in"
-          onPress={() => signInWithPhoneNumber('+923068471693')}
-        />
-      </View>
-    );
-  }
-
   return (
     <View style={styles.container}>
-      <Text>otp screen</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Enter Number 03********"
-        keyboardType="phone-pad"
-        textAlign={'center'}
-        selectionColor="#1e2d50"
-        maxLength={13}
-        value={code}
-        onChangeText={(text) => setCode(text)}
-      />
-      {/* <TextInput
-        style={styles.input}
-        placeholder="Password"
-        keyboardType="visible-password"
-        textAlign={'center'}
-        selectionColor="#1e2d50"
-        maxLength={11}
-        value={password}
-        onChangeText={(text) => setPassword(text)}
-      /> */}
-      <Button title="confirm otp" onPress={() => confirmCode()} />
+      <View style={styles.section1}>
+        <Text style={styles.homeTxt}>Home</Text>
+        <View style={styles.section3}>
+          {/* <ScrollView horizontal={true}> */}
+          <View style={styles.card}></View>
+          {/* <View style={styles.card}></View>
+            <View style={styles.card}></View>
+            <View style={styles.card}></View> */}
+          {/* </ScrollView> */}
+        </View>
+        {/* <View style={styles.cardsView}>
+          <View style={styles.cardSmall}></View>
+          <View style={styles.cardSmall}></View>
+          <View style={styles.cardSmall}></View>
+        </View> */}
+        <View style={styles.section4}>
+          {/* <View style={styles.card2}></View> */}
+        </View>
+      </View>
+      <View style={styles.section2}>
+        <TouchableOpacity onPress={() => alert('Home')} activeOpacity={1}>
+          <Icon size={40} color="black" name="home" />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => alert('Search')} activeOpacity={1}>
+          <Icon size={40} color="black" name="search1" />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => alert('Notifications')}
+          activeOpacity={1}>
+          <Icon size={40} color="black" name="bells" />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => alert('User')} activeOpacity={1}>
+          <User size={40} color="black" name="user" />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -86,59 +63,96 @@ export default Home;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#f07279',
   },
-  input: {
-    backgroundColor: '#fff',
+  section1: {
+    flex: 9,
+  },
+  section2: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    backgroundColor: 'white',
+  },
+  homeTxt: {
+    fontSize: 35,
+    fontWeight: 'bold',
+    fontFamily: 'sans-serif-light',
+    marginLeft: 20,
+    flex: 1,
+  },
+  section3: {
+    flex: 4,
+    backgroundColor: '#f23c5a',
+  },
+  section4: {
+    flex: 4,
+    backgroundColor: '#f0f0f0',
+  },
+  scrollView: {
+    // flex: 2,
+    backgroundColor: 'black',
+  },
+  card: {
+    // flex: 4,
+    // width: '90%',
+    width: (windowWidth * 90) / 100,
+    height: '70%',
+    marginHorizontal: '5%',
+    marginVertical: '10%',
+    backgroundColor: 'white',
+    borderRadius: 25,
+    opacity: 0.9,
+    top: -15,
+  },
+  cardsView: {
+    backgroundColor: 'white',
+    position: 'absolute',
+    // flex: 1,
     width: '100%',
-    marginBottom: 10,
-    // width: 250,
-    borderBottomWidth: 1,
-    borderBottomColor: '#1e2d50',
-    fontSize: 17,
+    height: '15%',
+    top: 352,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    // paddingHorizontal: '2%',
+    // paddingVertical: '2%',
+    zIndex: 2,
+    // opacity: 0.5,
+  },
+  cardSmall: {
+    // flex: 1,
+    width: 110,
+    height: 110,
+    // marginHorizontal: '5%',
+    // marginVertical: '10%',
+    backgroundColor: 'white',
+    borderRadius: 10,
+    opacity: 1,
+    marginLeft: 10,
+    marginRight: 10,
+    top: -30,
+    // position: 'absolute',
+    // zIndex: 6,
+    // flex: 1,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 2,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+    elevation: 4,
+  },
+  card2: {
+    // flex: 4,
+    width: '90%',
+    height: '55%',
+    marginHorizontal: '5%',
+    marginVertical: '10%',
+    backgroundColor: '#0c889b',
+    borderRadius: 25,
+    opacity: 0.9,
+    top: 72,
   },
 });
-
-// import React, {useState} from 'react';
-// import {Button, TextInput} from 'react-native';
-// import auth from '@react-native-firebase/auth';
-
-// function Home() {
-//   // If null, no SMS has been sent
-//   const [confirm, setConfirm] = useState(null);
-
-//   const [code, setCode] = useState('');
-
-//   // Handle the button press
-//   async function signInWithPhoneNumber(phoneNumber) {
-//     const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
-//     setConfirm(confirmation);
-//   }
-
-//   async function confirmCode() {
-//     try {
-//       await confirm.confirm(code);
-//     } catch (error) {
-//       console.log('Invalid code.');
-//     }
-//   }
-
-//   if (!confirm) {
-//     return (
-//       <Button
-//         title="Phone Number Sign In"
-//         onPress={() => signInWithPhoneNumber('+923068471693')}
-//       />
-//     );
-//   }
-
-//   return (
-//     <>
-//       <TextInput value={code} onChangeText={(text) => setCode(text)} />
-//       <Button title="Confirm Code" onPress={() => confirmCode()} />
-//     </>
-//   );
-// }
-// export default Home;

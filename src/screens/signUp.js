@@ -43,7 +43,7 @@ const SignUp = ({navigation}) => {
           <Text style={{textAlign: 'center', fontSize: 16, color: '#1e2d50'}}>
             We will send you one time password on this mobile number(OTP)
           </Text>
-          <Text style={{textAlign: 'center', color: '#b6555a'}}>
+          <Text style={{textAlign: 'center', color: '#f23c5a'}}>
             Carrier rates may apply
           </Text>
           {/* <View style={styles.nextArrowView}> */}
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   },
   section1: {
     flex: 1,
-    backgroundColor: '#f07279',
+    backgroundColor: '#f23c5a',
     width: '100%',
     justifyContent: 'space-evenly',
     alignItems: 'center',
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
   //     borderRightColor: 'black',
   //   },
   nextArrow: {
-    backgroundColor: '#f07279',
+    backgroundColor: '#f23c5a',
     borderRadius: 50,
     width: 70,
     height: 70,
