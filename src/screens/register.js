@@ -3,81 +3,81 @@ import {
   StyleSheet,
   View,
   Text,
-  Dimensions,
-  TextInput,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import Auth0 from 'react-native-auth0';
-const auth0 = new Auth0({
-  domain: 'dev-n32trw0e.us.auth0.com',
-  clientId: '6OYhq6525yFra1n3L5L3hYYucghbNQoP',
-});
+import {LoginManager, AccessToken} from 'react-native-fbsdk';
+import auth from '@react-native-firebase/auth';
+
 import Otp from '../assets/otp2.svg';
 import Waves from '../assets/waves.svg';
 const windowHeight = Dimensions.get('window').height;
-// const windowWidth = Dimensions.get('window').width;
+import database from '@react-native-firebase/database';
 
 const SignUp = ({navigation}) => {
-  sendData = () => {
-    console.log('pressed');
-    // auth0.auth
-    //   .passwordlessWithEmail({
-    //     email: 'aqsamaan507@gmail.com',
-    //     send: 'link',
-    //   })
-    //   .then((snap) => console.log(snap, 'snap'))
-    //   .catch(console.error, (err) => console.log(err, 'err'));
+  const fbLogin = async () => {
+    const result = await LoginManager.logInWithPermissions([
+      'public_profile',
+      'email',
+    ]);
 
-    auth0.auth
-      .passwordlessWithSMS({
-        // phoneNumber: '+5491159991000',
-        phoneNumber: '+923068471693',
+    if (result.isCancelled) {
+      throw 'User cancelled the login process';
+    }
+
+    // Once signed in, get the users AccesToken
+    const data = await AccessToken.getCurrentAccessToken();
+
+    if (!data) {
+      throw 'Something went wrong obtaining access token';
+    }
+
+    // Create a Firebase credential with the AccessToken
+    const facebookCredential = auth.FacebookAuthProvider.credential(
+      data.accessToken,
+    );
+
+    // Sign-in the user with the credential
+    auth()
+      .signInWithCredential(facebookCredential)
+      .then((data) => {
+        const User = {
+          name: data.user.displayName,
+          uid: data.user.uid,
+          email: data.user.email,
+          photo: data.user.photoURL,
+        };
+        console.log('user>>', User);
+        database().ref('/').child(`users/${User.uid}`).set(User);
+        navigation.navigate('Home');
       })
-      .then((snap) => console.log(snap, 'snap'))
-      .catch(console.error, console.log('err'));
+      .catch((err) => {
+        console.log('error>>', err);
+      });
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.section1}>
-        <View
-          style={{
-            // justifyContent: 'center',
-            alignItems: 'center',
-            flexDirection: 'row',
-          }}>
-          <Icon size={40} color="white" name="west" />
-          <Text style={styles.otpText}>OTP Verification</Text>
-        </View>
-        <Otp style={{marginBottom: 40}} />
+        <Text style={styles.otpText}>Welcome! </Text>
+        <Otp />
       </View>
       <View style={styles.section2}>
         <View style={styles.section3}>
-          <TextInput
-            style={styles.input}
-            placeholder="Enter Number 03********"
-            keyboardType="phone-pad"
-            textAlign={'center'}
-            selectionColor="#1e2d50"
-            maxLength={11}
-          />
-          <Text style={{textAlign: 'center', fontSize: 16, color: '#1e2d50'}}>
-            We will send you one time password on this mobile number(OTP)
+          <Text style={{textAlign: 'center', color: '#f23c5a', fontSize: 20}}>
+            Sign In or Sign Up with
           </Text>
-          <Text style={{textAlign: 'center', color: '#f23c5a'}}>
-            Carrier rates may apply
+          <Text style={{textAlign: 'center', color: '#f23c5a', fontSize: 30}}>
+            Facebook
           </Text>
-          {/* <View style={styles.nextArrowView}> */}
           <TouchableOpacity
             style={styles.nextArrow}
-            onPress={() => navigation.navigate('Verification')}
-            // onPress={() => sendData()}
+            // onPress={() => navigation.navigate('Verification')}
+            onPress={fbLogin}
             activeOpacity={0.9}>
-            <Icon size={40} color="white" name="east" />
+            <Icon size={40} color="white" name="facebook" />
           </TouchableOpacity>
-          {/* </View> */}
         </View>
         <View style={styles.wave}>
           <Waves />
@@ -92,20 +92,16 @@ export default SignUp;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // height: windowHeight,
-    // width: windowWidth,
-    // justifyContent: 'center',
-    // alignItems: 'center',
   },
   section1: {
-    flex: 1,
+    flex: 3,
     backgroundColor: '#f23c5a',
     width: '100%',
     justifyContent: 'space-evenly',
     alignItems: 'center',
   },
   section2: {
-    flex: 1,
+    flex: 2,
     backgroundColor: '#fafafa',
     width: '100%',
     // alignContent: 'flex-end',
@@ -115,7 +111,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     width: '80%',
-    height: '80%',
+    height: '70%',
     borderRadius: 25,
     position: 'absolute',
     zIndex: 1,
@@ -142,15 +138,11 @@ const styles = StyleSheet.create({
     fontSize: 17,
   },
   otpText: {
-    fontSize: 25,
+    fontSize: 35,
     color: '#ffffff',
-    width: 200,
+    // width: 200,
     fontFamily: 'sans-serif-light',
   },
-  //   nextArrowView: {
-  //     borderRightWidth: 20,
-  //     borderRightColor: 'black',
-  //   },
   nextArrow: {
     backgroundColor: '#f23c5a',
     borderRadius: 50,
@@ -172,11 +164,15 @@ const styles = StyleSheet.create({
     // left: 'auto',
   },
   wave: {
-    flex: 1,
+    width: '100%',
+    // height: 90,
+    // flex: 1,
     // position: 'absolute',
     // bottom: 0,
-    width: '100%',
     // zIndex: 5,
-    marginTop: '68.5%',
+    marginTop: windowHeight / 3.7,
+    // alignSelf: '',
+    // alignContent: 'space-between',
+    // alignItems: 'baseline',
   },
 });

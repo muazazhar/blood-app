@@ -1,75 +1,47 @@
 import React, {useState} from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  Dimensions,
-  TextInput,
-  TouchableOpacity,
-  Button,
-} from 'react-native';
-// import database from '@react-native-firebase/database';
+import {StyleSheet, View, Text, Button} from 'react-native';
+import {LoginManager, AccessToken} from 'react-native-fbsdk';
 import auth from '@react-native-firebase/auth';
-// import firebaseSetup from '../config/firebaseSetup';
+import database from '@react-native-firebase/database';
+
 const Login = () => {
-  // const {auth} = firebaseSetup();
-  const [number, setNumber] = useState('+92 306 8471693');
-  const [password, setPassword] = useState('');
-  const [confirm, setConfirm] = useState(null);
-  const [code, setCode] = useState('');
+  const fbLogin = async () => {
+    const result = await LoginManager.logInWithPermissions([
+      'public_profile',
+      'email',
+    ]);
 
-  const signInWithPhoneNumber = async (phoneNumber) => {
-    const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
-    setConfirm(confirmation);
-  };
-  const confirmCode = async () => {
-    try {
-      await confirm.confirm(code);
-      alert('user signed in successfully');
-    } catch (err) {
-      console.log('Invalid code.', err);
+    if (result.isCancelled) {
+      throw 'User cancelled the login process';
     }
-  };
 
-  if (!confirm) {
-    return (
-      <View style={styles.container}>
-        <Text>Otp verification</Text>
-        <Button
-          title="phone number sign in"
-          onPress={() => {
-            signInWithPhoneNumber('+92 306 8471693');
-            console.log('pressed');
-          }}
-        />
-      </View>
+    // Once signed in, get the users AccesToken
+    const data = await AccessToken.getCurrentAccessToken();
+
+    if (!data) {
+      throw 'Something went wrong obtaining access token';
+    }
+
+    // Create a Firebase credential with the AccessToken
+    const facebookCredential = auth.FacebookAuthProvider.credential(
+      data.accessToken,
     );
-  }
+
+    // Sign-in the user with the credential
+    auth()
+      .signInWithCredential(facebookCredential)
+      .then((user) => {
+        console.log('user>>', user);
+      })
+      .catch((err) => {
+        console.log('error>>', err);
+      });
+  };
 
   return (
     <View style={styles.container}>
-      <Text>otp screen</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Enter Number 03********"
-        keyboardType="phone-pad"
-        textAlign={'center'}
-        selectionColor="#1e2d50"
-        maxLength={13}
-        value={code}
-        onChangeText={(text) => setCode(text)}
-      />
-      {/* <TextInput
-        style={styles.input}
-        placeholder="Password"
-        keyboardType="visible-password"
-        textAlign={'center'}
-        selectionColor="#1e2d50"
-        maxLength={11}
-        value={password}
-        onChangeText={(text) => setPassword(text)}
-      /> */}
-      <Button title="confirm otp" onPress={() => confirmCode()} />
+      <Text>Otp verification</Text>
+      <Button title="login with fb " onPress={fbLogin} />
     </View>
   );
 };

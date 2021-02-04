@@ -10,49 +10,154 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import User from 'react-native-vector-icons/Feather';
+import auth from '@react-native-firebase/auth';
+import DonorCard from '../assets/donorCard.svg';
+import Booking from '../assets/Booking.svg';
+import Drive from '../assets/drive.svg';
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 
-// export const Card = () => {
-//   return;
-// };
-
-const Home = () => {
+const Home = ({navigation}) => {
   return (
     <View style={styles.container}>
       <View style={styles.section1}>
         <Text style={styles.homeTxt}>Home</Text>
         <View style={styles.section3}>
-          {/* <ScrollView horizontal={true}> */}
-          <View style={styles.card}></View>
-          {/* <View style={styles.card}></View>
-            <View style={styles.card}></View>
-            <View style={styles.card}></View> */}
-          {/* </ScrollView> */}
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+            <TouchableOpacity onPress={() => alert('hello there')}>
+              <View style={styles.card}>
+                <View style={{flex: 1.5}}>
+                  <Text style={styles.heroTxt}>
+                    Everyone{' '}
+                    <Text style={{fontSize: 35}}>
+                      Could Be <Text style={{fontSize: 23}}>a </Text>
+                      <Text>Hero</Text>
+                    </Text>
+                  </Text>
+                  <Text style={[styles.heroTxt, {marginTop: 20}]}>
+                    BE A DONOR
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    flex: 1,
+                    backgroundColor: '#ffbdc8',
+                    borderRadius: 20,
+                  }}>
+                  <DonorCard />
+                </View>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => alert('hello there')}>
+              <View style={styles.card}>
+                <View style={{flex: 1}}>
+                  <Text style={styles.heroTxt}>
+                    Schedule{' '}
+                    <Text style={{fontSize: 30, lineHeight: 40}}>
+                      Blood Donation
+                      <Text style={{fontSize: 25}}>Date</Text>
+                    </Text>
+                  </Text>
+                  {/* <Text style={[styles.heroTxt, {marginTop: 20}]}>
+                    BE A DONOR
+                  </Text> */}
+                </View>
+                <View
+                  style={{
+                    flex: 1,
+                    // backgroundColor: '#ffbdc8',
+                    borderRadius: 20,
+                  }}>
+                  <Booking />
+                </View>
+              </View>
+            </TouchableOpacity>
+          </ScrollView>
         </View>
-        {/* <View style={styles.cardsView}>
-          <View style={styles.cardSmall}></View>
-          <View style={styles.cardSmall}></View>
-          <View style={styles.cardSmall}></View>
-        </View> */}
+        <View style={styles.cardsView}>
+          <View style={styles.cardSmall}>
+            <Text>Find Donors</Text>
+          </View>
+          <View style={styles.cardSmall}>
+            <Text>Donate</Text>
+          </View>
+          <View style={styles.cardSmall}>
+            <Text>Order Blood</Text>
+          </View>
+        </View>
         <View style={styles.section4}>
-          {/* <View style={styles.card2}></View> */}
+          <View style={styles.card2}>
+            <View
+              style={{
+                flex: 2.5,
+                // backgroundColor: 'yellow',
+              }}>
+              <Text
+                style={{
+                  color: 'white',
+                  fontFamily: 'monospace',
+                  fontSize: 20,
+                  width: '95%',
+                  margin: '10%',
+                  marginBottom: 0,
+                  marginTop: '7%',
+                }}>
+                Give The Gift Of
+              </Text>
+              <Text
+                style={{
+                  textAlign: 'center',
+                  color: 'white',
+                  fontFamily: 'monospace',
+                  fontSize: 23,
+                  fontWeight: 'bold',
+                }}>
+                Life
+              </Text>
+              <Text
+                style={{
+                  textAlign: 'center',
+                  color: 'white',
+                  fontFamily: 'monospace',
+                  fontSize: 27,
+                  fontWeight: 'bold',
+                  marginLeft: 10,
+                }}>
+                DONATE{' '}
+                <Text style={{color: '#0c889b', backgroundColor: 'white'}}>
+                  {' '}
+                  BLOOD{' '}
+                </Text>
+              </Text>
+            </View>
+            <View
+              style={{
+                flex: 1,
+                // backgroundColor: 'red',
+                marginRight: 10,
+              }}>
+              <Drive />
+            </View>
+          </View>
         </View>
       </View>
       <View style={styles.section2}>
         <TouchableOpacity onPress={() => alert('Home')} activeOpacity={1}>
-          <Icon size={40} color="black" name="home" />
+          <Icon size={(windowWidth * 10) / 100} color="black" name="home" />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => alert('Search')} activeOpacity={1}>
-          <Icon size={40} color="black" name="search1" />
+          <Icon size={(windowWidth * 10) / 100} color="black" name="search1" />
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => alert('Notifications')}
           activeOpacity={1}>
-          <Icon size={40} color="black" name="bells" />
+          <Icon size={(windowWidth * 10) / 100} color="black" name="bells" />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => alert('User')} activeOpacity={1}>
-          <User size={40} color="black" name="user" />
+        <TouchableOpacity
+          // onPress={() => navigate('Settings')}
+          onPress={() => navigation.navigate('Settings')}
+          activeOpacity={1}>
+          <User size={(windowWidth * 10) / 100} color="black" name="user" />
         </TouchableOpacity>
       </View>
     </View>
@@ -65,7 +170,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   section1: {
-    flex: 9,
+    flex: 10,
   },
   section2: {
     flex: 1,
@@ -88,53 +193,50 @@ const styles = StyleSheet.create({
   section4: {
     flex: 4,
     backgroundColor: '#f0f0f0',
+    // backgroundColor: 'black',
   },
-  scrollView: {
-    // flex: 2,
-    backgroundColor: 'black',
-  },
+
   card: {
-    // flex: 4,
-    // width: '90%',
-    width: (windowWidth * 90) / 100,
-    height: '70%',
-    marginHorizontal: '5%',
-    marginVertical: '10%',
-    backgroundColor: 'white',
+    width: (windowWidth * 85) / 100,
+    height: (windowHeight / 100) * 28,
+    marginHorizontal: (windowWidth / 100) * 4,
+    marginVertical: 35,
+    backgroundColor: '#f7f7f7',
     borderRadius: 25,
-    opacity: 0.9,
+    // opacity: 0.9,
     top: -15,
+    padding: 15,
+    flexDirection: 'row',
+  },
+  heroTxt: {
+    // backgroundColor: 'yellow',
+    // width: '40%',
+    color: '#f5627a',
+    fontSize: 26,
+    fontWeight: 'bold',
+    fontFamily: 'monospace',
+    // letterSpacing: 2,
   },
   cardsView: {
-    backgroundColor: 'white',
+    backgroundColor: '#fcfcfc',
     position: 'absolute',
-    // flex: 1,
     width: '100%',
-    height: '15%',
-    top: 352,
+    height: (windowHeight / 100) * 12,
+    top: (windowHeight / 100) * 50,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
-    // paddingHorizontal: '2%',
-    // paddingVertical: '2%',
     zIndex: 2,
-    // opacity: 0.5,
   },
   cardSmall: {
-    // flex: 1,
-    width: 110,
-    height: 110,
-    // marginHorizontal: '5%',
-    // marginVertical: '10%',
-    backgroundColor: 'white',
+    width: (windowWidth * 28) / 100,
+    height: (windowHeight / 100) * 15,
+    backgroundColor: '#fff',
     borderRadius: 10,
     opacity: 1,
     marginLeft: 10,
     marginRight: 10,
     top: -30,
-    // position: 'absolute',
-    // zIndex: 6,
-    // flex: 1,
     shadowColor: '#000',
     shadowOffset: {
       width: 2,
@@ -145,14 +247,14 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   card2: {
-    // flex: 4,
-    width: '90%',
-    height: '55%',
-    marginHorizontal: '5%',
-    marginVertical: '10%',
+    width: (windowWidth * 93) / 100,
+    height: (windowHeight / 100) * 20,
+    marginHorizontal: (windowWidth / 100) * 4,
+    marginVertical: 40,
     backgroundColor: '#0c889b',
     borderRadius: 25,
     opacity: 0.9,
     top: 72,
+    flexDirection: 'row',
   },
 });
