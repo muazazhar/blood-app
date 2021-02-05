@@ -9,13 +9,14 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {LoginManager, AccessToken} from 'react-native-fbsdk';
 import auth from '@react-native-firebase/auth';
-
+import {useNavigation} from '@react-navigation/native';
 import Otp from '../assets/otp2.svg';
 import Waves from '../assets/waves.svg';
 const windowHeight = Dimensions.get('window').height;
 import database from '@react-native-firebase/database';
 
-const SignUp = ({navigation}) => {
+const SignUp = () => {
+  const navigation = useNavigation();
   const fbLogin = async () => {
     const result = await LoginManager.logInWithPermissions([
       'public_profile',

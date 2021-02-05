@@ -53,7 +53,7 @@ const Search = ({navigation}) => {
           alignItems: 'center',
           justifyContent: 'space-around',
           //   marginTop: -50,
-          flex: 1,
+          flex: 0.8,
         }}>
         <TouchableOpacity
           onPress={() => navigation.goBack()}
@@ -64,9 +64,116 @@ const Search = ({navigation}) => {
       </View>
       <View
         style={{
+          //   backgroundColor: 'yellow',
+          alignItems: 'center',
+          flex: 2.2,
+        }}>
+        <Text style={{fontSize: 25, fontFamily: 'monospace'}}>
+          Search with blood type
+        </Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            // backgroundColor: 'yellow',
+            width: '90%',
+            justifyContent: 'space-evenly',
+          }}>
+          <TouchableOpacity activeOpacity={0.9}>
+            <View style={{...styles.blood, borderRadius: 20}}>
+              <Text
+                style={{
+                  color: '#fff',
+                  fontSize: 20,
+                }}>
+                A+
+              </Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity activeOpacity={0.9}>
+            <View style={{...styles.blood, borderRadius: 20}}>
+              <Text
+                style={{
+                  color: '#fff',
+                  fontSize: 20,
+                }}>
+                A-
+              </Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity activeOpacity={0.9}>
+            <View style={{...styles.blood, borderRadius: 20}}>
+              <Text
+                style={{
+                  color: '#fff',
+                  fontSize: 20,
+                }}>
+                B+
+              </Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity activeOpacity={0.9}>
+            <View style={{...styles.blood, borderRadius: 20}}>
+              <Text
+                style={{
+                  color: '#fff',
+                  fontSize: 20,
+                }}>
+                B-
+              </Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity activeOpacity={0.9}>
+            <View style={{...styles.blood, borderRadius: 20}}>
+              <Text
+                style={{
+                  color: '#fff',
+                  fontSize: 20,
+                }}>
+                O+
+              </Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity activeOpacity={0.9}>
+            <View style={{...styles.blood, borderRadius: 20}}>
+              <Text
+                style={{
+                  color: '#fff',
+                  fontSize: 20,
+                }}>
+                O-
+              </Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity activeOpacity={0.9}>
+            <View style={{...styles.blood, borderRadius: 20}}>
+              <Text
+                style={{
+                  color: '#fff',
+                  fontSize: 20,
+                }}>
+                AB+
+              </Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity activeOpacity={0.9}>
+            <View style={{...styles.blood, borderRadius: 20}}>
+              <Text
+                style={{
+                  color: '#fff',
+                  fontSize: 20,
+                }}>
+                AB-
+              </Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </View>
+      <View
+        style={{
           //   backgroundColor: 'red',
           alignItems: 'center',
-          flex: 8,
+          flex: 5,
         }}>
         <ScrollView showsVerticalScrollIndicator={false} style={{width: '95%'}}>
           {data?.map((v, i) => {

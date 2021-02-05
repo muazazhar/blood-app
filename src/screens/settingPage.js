@@ -26,9 +26,6 @@ const Settings = ({navigation}) => {
   const [age, setAge] = useState('10');
   const [isDonor, setDonor] = useState(false);
   const user = auth().currentUser;
-  if (user) {
-    console.log('User email: ', user);
-  }
 
   const save_data = () => {
     let userData = {
@@ -51,7 +48,7 @@ const Settings = ({navigation}) => {
     auth()
       .signOut()
       .then(() => {
-        navigation.navigate('Register');
+        navigation.navigate('CheckUser');
         console.log('User signed out!');
       });
   };
