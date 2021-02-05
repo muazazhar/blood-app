@@ -17,6 +17,7 @@ const windowWidth = Dimensions.get('window').width;
 
 const Search = ({navigation}) => {
   let donorsData = [];
+  //   console.log('bef', donorsData);
   database()
     .ref('users')
     .orderByChild('isDonor')
@@ -28,16 +29,17 @@ const Search = ({navigation}) => {
         //   console.log(snapshot.val());
         donorsData.push(snapshot.val());
       });
-      console.log('aft', donorsData);
+      //   console.log('aft', donorsData);
     });
-
   return (
     <View style={styles.container}>
       {/* <View
         style={{
+          //   backgroundColor: 'yellow',
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'space-around',
+          //   marginTop: -50,
           flex: 1,
         }}>
         <TouchableOpacity
@@ -49,7 +51,7 @@ const Search = ({navigation}) => {
       </View> */}
       <View
         style={{
-          backgroundColor: 'red',
+          //   backgroundColor: 'red',
           alignItems: 'center',
           flex: 8,
         }}>
@@ -61,6 +63,15 @@ const Search = ({navigation}) => {
               </View>
             </View>
                   </TouchableOpacity> */}
+        {/* {donorsData.map((i, v) => {
+            <TouchableOpacity onPress={() => alert('hello there')}>
+              <View style={styles.card}>
+                <View style={{flex: 1.5}}>
+                  <Text style={styles.heroTxt}>v.name</Text>
+                </View>
+              </View>
+            </TouchableOpacity>;
+          })} */}
         <Button
           title="get date"
           onPress={() =>
@@ -70,14 +81,26 @@ const Search = ({navigation}) => {
               }),
             )
           }
-          //       donorsData.map((v, i) => { return (<Text>{v.name}</Text>)}
-          //
-          //
         />
+        <View style={{backgroundColor: 'red', flex: 1}}>
+          {donorsData.map((v, i) => {
+            return (
+              <View
+                key={v.uid}
+                style={{
+                  backgroundColor: 'white',
+                  padding: 10,
+                  margin: 5,
+                  borderRadius: 10,
+                }}>
+                <Text>{v.name}</Text>
+                <Text>{v.email}</Text>
+                <Image source={{uri: v.photo}} style={{height: 150, flex: 1}} />
+              </View>
+            );
+          })}
+        </View>
         {/* </ScrollView> */}
-        {donorsData.map((v, i) => {
-          return <Text key={i}>{v.name}</Text>;
-        })}
       </View>
     </View>
   );
