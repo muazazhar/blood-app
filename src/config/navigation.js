@@ -2,24 +2,18 @@ import * as React from 'react';
 import {View, Text} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import SignUp from '../screens/signUp';
 import Verification from '../screens/verification';
-import Login from '../screens/login';
 import Home from '../screens/home';
 import Register from '../screens/register';
 import CheckUser from '../screens/checkuser';
 import Settings from '../screens/settingPage';
+import Search from '../screens/search';
 const Stack = createStackNavigator();
 
 function AppNavigation({navigation}) {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {/* <Stack.Screen
-          name="SignUp"
-          component={SignUp}
-          options={{headerShown: false}}
-        /> */}
         <Stack.Screen
           name="CheckUser"
           component={CheckUser}
@@ -30,11 +24,11 @@ function AppNavigation({navigation}) {
           component={Register}
           options={{headerShown: false}}
         />
-        <Stack.Screen
+        {/* <Stack.Screen
           name="Verification"
           component={Verification}
           options={{headerShown: false}}
-        />
+        /> */}
         <Stack.Screen
           name="Home"
           component={Home}
@@ -46,11 +40,11 @@ function AppNavigation({navigation}) {
           component={Settings}
           options={{headerShown: false}}
         />
-        {/* <Stack.Screen
-          name="Register"
-          component={Register}
+        <Stack.Screen
+          name="Search"
+          component={Search}
           options={{headerShown: false}}
-        /> */}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

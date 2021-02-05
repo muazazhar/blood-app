@@ -47,6 +47,12 @@ const SignUp = ({navigation}) => {
           uid: data.user.uid,
           email: data.user.email,
           photo: data.user.photoURL,
+          // phoneNumber: '000',
+          // gender: 'male',
+          // bloodType: 'O -',
+          // location: 'fsd',
+          // age: 20,
+          // isDonor: false,
         };
         console.log('user>>', User);
         database().ref('/').child(`users/${User.uid}`).set(User);

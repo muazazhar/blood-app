@@ -13,6 +13,7 @@ import User from 'react-native-vector-icons/Feather';
 import auth from '@react-native-firebase/auth';
 import DonorCard from '../assets/donorCard.svg';
 import Booking from '../assets/Booking.svg';
+import Donate from '../assets/donate.svg';
 import Drive from '../assets/drive.svg';
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
@@ -24,7 +25,12 @@ const Home = ({navigation}) => {
         <Text style={styles.homeTxt}>Home</Text>
         <View style={styles.section3}>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-            <TouchableOpacity onPress={() => alert('hello there')}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('Settings');
+                alert('Change Your donor status to "true" in settings');
+              }}
+              activeOpacity={0.9}>
               <View style={styles.card}>
                 <View style={{flex: 1.5}}>
                   <Text style={styles.heroTxt}>
@@ -34,9 +40,7 @@ const Home = ({navigation}) => {
                       <Text>Hero</Text>
                     </Text>
                   </Text>
-                  <Text style={[styles.heroTxt, {marginTop: 20}]}>
-                    BE A DONOR
-                  </Text>
+                  <Text style={[styles.heroTxt]}>BE A DONOR</Text>
                 </View>
                 <View
                   style={{
@@ -48,7 +52,9 @@ const Home = ({navigation}) => {
                 </View>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => alert('hello there')}>
+            <TouchableOpacity
+              onPress={() => alert('Coming Soon...')}
+              activeOpacity={0.9}>
               <View style={styles.card}>
                 <View style={{flex: 1}}>
                   <Text style={styles.heroTxt}>
@@ -58,9 +64,6 @@ const Home = ({navigation}) => {
                       <Text style={{fontSize: 25}}>Date</Text>
                     </Text>
                   </Text>
-                  {/* <Text style={[styles.heroTxt, {marginTop: 20}]}>
-                    BE A DONOR
-                  </Text> */}
                 </View>
                 <View
                   style={{
@@ -75,15 +78,41 @@ const Home = ({navigation}) => {
           </ScrollView>
         </View>
         <View style={styles.cardsView}>
-          <View style={styles.cardSmall}>
+          <TouchableOpacity
+            style={styles.cardSmall}
+            onPress={() => navigation.navigate('Search')}
+            activeOpacity={1}>
             <Text>Find Donors</Text>
-          </View>
-          <View style={styles.cardSmall}>
+            <Icon
+              size={(windowWidth * 10) / 100}
+              color="#e32b49"
+              name="search1"
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.cardSmall}
+            onPress={() => {
+              navigation.navigate('Settings');
+              alert('Change Your donor status to "true" in settings');
+            }}
+            activeOpacity={1}>
             <Text>Donate</Text>
-          </View>
-          <View style={styles.cardSmall}>
+            <Donate
+              width={(windowWidth * 10) / 100}
+              height={(windowWidth * 10) / 100}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.cardSmall}
+            activeOpacity={1}
+            onPress={() => alert('Coming Soon... ')}>
             <Text>Order Blood</Text>
-          </View>
+            <User
+              size={(windowWidth * 10) / 100}
+              color="#e32b49"
+              name="droplet"
+            />
+          </TouchableOpacity>
         </View>
         <View style={styles.section4}>
           <View style={styles.card2}>
@@ -145,16 +174,12 @@ const Home = ({navigation}) => {
         <TouchableOpacity onPress={() => alert('Home')} activeOpacity={1}>
           <Icon size={(windowWidth * 10) / 100} color="black" name="home" />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => alert('Search')} activeOpacity={1}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Search')}
+          activeOpacity={1}>
           <Icon size={(windowWidth * 10) / 100} color="black" name="search1" />
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => alert('Notifications')}
-          activeOpacity={1}>
-          <Icon size={(windowWidth * 10) / 100} color="black" name="bells" />
-        </TouchableOpacity>
-        <TouchableOpacity
-          // onPress={() => navigate('Settings')}
           onPress={() => navigation.navigate('Settings')}
           activeOpacity={1}>
           <User size={(windowWidth * 10) / 100} color="black" name="user" />
@@ -245,6 +270,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.23,
     shadowRadius: 2.62,
     elevation: 4,
+    justifyContent: 'space-around',
+    alignItems: 'center',
   },
   card2: {
     width: (windowWidth * 93) / 100,

@@ -1,33 +1,42 @@
 {
   "project_info": {
-    "project_number": "150285629948",
-    "project_id": "bllodology",
-    "storage_bucket": "bllodology.appspot.com"
+    "project_number": "431614982094",
+    "firebase_url": "https://bloodology-m-default-rtdb.firebaseio.com",
+    "project_id": "bloodology-m",
+    "storage_bucket": "bloodology-m.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:150285629948:android:cbb01b2cfb7e44d5825a79",
+        "mobilesdk_app_id": "1:431614982094:android:b49dfec73192b36d47dd9f",
         "android_client_info": {
           "package_name": "com.bloodology"
         }
       },
       "oauth_client": [
         {
-          "client_id": "150285629948-btq994601ekfe9dnpnugintus4b220dd.apps.googleusercontent.com",
+          "client_id": "431614982094-hi019t6dnkd3npvs4itgoo3ciaarfoe6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bloodology",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "431614982094-aj1g2vkcpd6kpc9thv6337qo4fnfsohp.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBsGtsdVRF9Ft0ZCXl7fkmmSEjeg5s6C0Y"
+          "current_key": "AIzaSyCExYjsDHEmIDM45NJzegou3Iset0ZNLMo"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "150285629948-btq994601ekfe9dnpnugintus4b220dd.apps.googleusercontent.com",
+              "client_id": "431614982094-aj1g2vkcpd6kpc9thv6337qo4fnfsohp.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

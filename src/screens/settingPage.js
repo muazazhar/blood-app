@@ -8,20 +8,52 @@ import {
   Modal,
   TouchableHighlight,
   Dimensions,
+  Image,
+  Switch,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import SettingSvg from '../assets/setting.svg';
 import auth from '@react-native-firebase/auth';
+import database from '@react-native-firebase/database';
 const windowHeight = Dimensions.get('window').height;
 
 const Settings = ({navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
-  //   const {navigate} = props.navigation;
-  //   const settingF = () => {};
+  const [number, setNumber] = useState('');
+  const [gender, setGender] = useState('male');
+  const [bloodType, setBloodType] = useState('O -ve');
+  const [location, setLocation] = useState('Faisalabad');
+  const [age, setAge] = useState('10');
+  const [isDonor, setDonor] = useState(false);
+  const user = auth().currentUser;
+  if (user) {
+    console.log('User email: ', user);
+  }
+
+  const save_data = () => {
+    let userData = {
+      number: number,
+      gender: gender,
+      bloodType: bloodType,
+      location: location,
+      age: age,
+      isDonor: isDonor,
+      email: user.email,
+      name: user.displayName,
+      uid: user.uid,
+      photo: user.photoURL,
+    };
+    console.log(userData);
+    database().ref(`/users/${user.uid}`).set(userData);
+  };
+
   const signOut = () => {
     auth()
       .signOut()
-      .then(() => console.log('User signed out!'));
+      .then(() => {
+        navigation.navigate('Register');
+        console.log('User signed out!');
+      });
   };
   return (
     <View style={styles.container}>
@@ -34,8 +66,7 @@ const Settings = ({navigation}) => {
           marginTop: -50,
         }}>
         <TouchableOpacity
-          onPress={() => navigation.navigate('Register')}
-          //   onPress={() => navigation.goBack()}
+          onPress={() => navigation.goBack()}
           activeOpacity={0.9}>
           <Icon size={40} color="#000" name="west" />
         </TouchableOpacity>
@@ -43,6 +74,19 @@ const Settings = ({navigation}) => {
       </View>
       <View style={{alignItems: 'center'}}>
         <SettingSvg />
+      </View>
+      <View style={styles.userData}>
+        <View
+          style={{
+            width: '50%',
+            flexDirection: 'row',
+            height: 60,
+            justifyContent: 'space-around',
+            alignItems: 'center',
+          }}>
+          <Text style={{fontSize: 20}}>{user.displayName}</Text>
+          <Image style={styles.profilePic} source={{uri: user.photoURL}} />
+        </View>
       </View>
       <View
         style={{
@@ -67,11 +111,12 @@ const Settings = ({navigation}) => {
       </View>
 
       <Modal
-        animationType="slide"
+        animationType="fade"
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
+          alert('Data is not saved.');
+          setModalVisible(!modalVisible);
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
@@ -83,6 +128,8 @@ const Settings = ({navigation}) => {
               textAlign={'center'}
               selectionColor="#1e2d50"
               maxLength={11}
+              value={number}
+              onChangeText={(e) => setNumber(e)}
             />
             <TextInput
               style={styles.input}
@@ -91,6 +138,8 @@ const Settings = ({navigation}) => {
               textAlign={'center'}
               selectionColor="#1e2d50"
               maxLength={11}
+              value={gender}
+              onChangeText={(e) => setGender(e)}
             />
             <TextInput
               style={styles.input}
@@ -99,6 +148,8 @@ const Settings = ({navigation}) => {
               textAlign={'center'}
               selectionColor="#1e2d50"
               maxLength={11}
+              value={bloodType}
+              onChangeText={(e) => setBloodType(e)}
             />
             <TextInput
               style={styles.input}
@@ -107,6 +158,8 @@ const Settings = ({navigation}) => {
               textAlign={'center'}
               selectionColor="#1e2d50"
               maxLength={11}
+              value={location}
+              onChangeText={(e) => setLocation(e)}
             />
             <TextInput
               style={styles.input}
@@ -115,6 +168,8 @@ const Settings = ({navigation}) => {
               textAlign={'center'}
               selectionColor="#1e2d50"
               maxLength={11}
+              value={age}
+              onChangeText={(e) => setAge(e)}
             />
             <View
               style={{
@@ -124,17 +179,21 @@ const Settings = ({navigation}) => {
                 marginTop: 10,
               }}>
               <Text style={{fontSize: 20}}>Want to donate? </Text>
-              <TouchableOpacity style={{...styles.button, width: '20%'}}>
-                <Text style={{color: '#fff'}}>Yes</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{...styles.button, width: '20%', marginLeft: 5}}>
-                <Text style={{color: '#fff'}}>No</Text>
-              </TouchableOpacity>
+              <Switch
+                trackColor={{false: '#767577', true: '#81b0ff'}}
+                thumbColor={isDonor ? '#f23c5a' : '#767577'}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={() => {
+                  setDonor(!isDonor);
+                  database().ref(`/users/${user.uid}/isDonor`).set(!isDonor);
+                }}
+                value={isDonor}
+              />
             </View>
             <TouchableHighlight
               style={{...styles.button, width: '80%'}}
               onPress={() => {
+                save_data();
                 setModalVisible(!modalVisible);
               }}>
               <Text style={styles.textStyle}>Save Data</Text>
@@ -222,5 +281,14 @@ const styles = StyleSheet.create({
     // marginBottom: 15,
     fontSize: 18,
     textAlign: 'center',
+  },
+  userData: {
+    alignItems: 'center',
+    // backgroundColor: 'red',
+  },
+  profilePic: {
+    height: 60,
+    width: 60,
+    borderRadius: 30,
   },
 });

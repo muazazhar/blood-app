@@ -4,7 +4,7 @@ import Register from '../screens/register';
 import Home from '../screens/home';
 // import Settings from '../screens/settingPage';
 
-const CheckUser = () => {
+const CheckUser = (props) => {
   // Set an initializing state whilst Firebase connects
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
@@ -26,6 +26,6 @@ const CheckUser = () => {
     return <Register />;
   }
 
-  return <Home />;
+  return <Home navigation={props.navigation} />;
 };
 export default CheckUser;
