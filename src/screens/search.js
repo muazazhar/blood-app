@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   View,
@@ -8,6 +8,8 @@ import {
   TouchableOpacity,
   Dimensions,
   Button,
+  Image,
+  ActivityIndicator,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import auth from '@react-native-firebase/auth';
@@ -16,24 +18,35 @@ const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 
 const Search = ({navigation}) => {
-  let donorsData = [];
-  //   console.log('bef', donorsData);
-  database()
-    .ref('users')
-    .orderByChild('isDonor')
-    .equalTo(true)
-    .once('value')
-    .then((results) => {
-      results.forEach((snapshot) => {
-        // console.log(snapshot.key, snapshot.val());
-        //   console.log(snapshot.val());
-        donorsData.push(snapshot.val());
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const donorsData = [];
+    database()
+      .ref('users')
+      .orderByChild('isDonor')
+      .equalTo(true)
+      .once('value')
+      .then((results) => {
+        results.forEach((snapshot) => {
+          donorsData.push(snapshot.val());
+        });
+        setData(donorsData);
+        console.log('afffter', donorsData);
+        setIsLoading(false);
       });
-      //   console.log('aft', donorsData);
-    });
+  }, []);
+  if (isLoading) {
+    return (
+      <View style={{flex: 1, justifyContent: 'center'}}>
+        <ActivityIndicator size="large" color="#e32b49" />
+      </View>
+    );
+  }
   return (
     <View style={styles.container}>
-      {/* <View
+      <View
         style={{
           //   backgroundColor: 'yellow',
           flexDirection: 'row',
@@ -48,59 +61,46 @@ const Search = ({navigation}) => {
           <Icon size={40} color="#000" name="west" />
         </TouchableOpacity>
         <Text style={styles.heroTxt}>Find Donors</Text>
-      </View> */}
+      </View>
       <View
         style={{
           //   backgroundColor: 'red',
           alignItems: 'center',
           flex: 8,
         }}>
-        {/* <ScrollView showsVerticalScrollIndicator={false}> */}
-        {/* <TouchableOpacity onPress={() => alert('hello there')}>
-            <View style={styles.card}>
-              <View style={{flex: 1.5}}>
-                <Text style={styles.heroTxt}>Everyone</Text>
-              </View>
-            </View>
-                  </TouchableOpacity> */}
-        {/* {donorsData.map((i, v) => {
-            <TouchableOpacity onPress={() => alert('hello there')}>
-              <View style={styles.card}>
-                <View style={{flex: 1.5}}>
-                  <Text style={styles.heroTxt}>v.name</Text>
-                </View>
-              </View>
-            </TouchableOpacity>;
-          })} */}
-        <Button
-          title="get date"
-          onPress={() =>
-            alert(
-              donorsData.map((v, i) => {
-                return v.name;
-              }),
-            )
-          }
-        />
-        <View style={{backgroundColor: 'red', flex: 1}}>
-          {donorsData.map((v, i) => {
+        <ScrollView showsVerticalScrollIndicator={false} style={{width: '95%'}}>
+          {data?.map((v, i) => {
             return (
-              <View
-                key={v.uid}
-                style={{
-                  backgroundColor: 'white',
-                  padding: 10,
-                  margin: 5,
-                  borderRadius: 10,
-                }}>
-                <Text>{v.name}</Text>
-                <Text>{v.email}</Text>
-                <Image source={{uri: v.photo}} style={{height: 150, flex: 1}} />
+              <View key={v.uid} style={styles.card}>
+                {v.photo && (
+                  <Image
+                    source={{uri: v.photo}}
+                    style={{
+                      width: 70,
+                      height: 70,
+                      borderRadius: 50,
+                    }}
+                  />
+                )}
+                <View style={{flex: 3, padding: 10}}>
+                  <Text style={{fontSize: 25, color: '#f23c5a'}}>{v.name}</Text>
+                  <Text style={{fontSize: 17, color: '#f23c5a'}}>
+                    {v.location}
+                  </Text>
+                </View>
+                <View style={styles.blood}>
+                  <Text
+                    style={{
+                      color: '#fff',
+                      fontSize: 20,
+                    }}>
+                    {v.bloodType}
+                  </Text>
+                </View>
               </View>
             );
           })}
-        </View>
-        {/* </ScrollView> */}
+        </ScrollView>
       </View>
     </View>
   );
@@ -110,29 +110,42 @@ export default Search;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fda1b0',
-    // alignItems: 'center',
-    // justifyContent: 'space-evenly',
+    backgroundColor: '#fff',
   },
   card: {
-    width: (windowWidth * 85) / 100,
-    height: (windowHeight / 100) * 18,
-    // marginHorizontal: (windowWidth / 100) * 4,
-    marginVertical: 15,
-    backgroundColor: '#f7f7f7',
-    borderRadius: 25,
-    // opacity: 0.9,
-    top: -15,
-    padding: 15,
+    backgroundColor: '#f0f0f0',
+    padding: 10,
+    margin: 5,
+    borderRadius: 10,
     flexDirection: 'row',
+    width: '97%',
+    height: 120,
+    marginBottom: 30,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 2,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 5.62,
+    elevation: 4,
   },
   heroTxt: {
-    // backgroundColor: 'yellow',
-    // width: '40%',
-    color: '#f5627a',
+    color: '#000',
     fontSize: 26,
     fontWeight: 'bold',
     fontFamily: 'monospace',
-    // letterSpacing: 2,
+    marginRight: 70,
+  },
+  blood: {
+    height: 75,
+    width: 75,
+    backgroundColor: '#f23c5a',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 50,
+    borderWidth: 5,
+    borderColor: '#fff',
   },
 });

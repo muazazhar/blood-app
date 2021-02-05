@@ -8,18 +8,12 @@ import Register from '../screens/register';
 import CheckUser from '../screens/checkuser';
 import Settings from '../screens/settingPage';
 import Search from '../screens/search';
-import New from '../screens/new';
 const Stack = createStackNavigator();
 
 function AppNavigation({navigation}) {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen
-          name="New"
-          component={New}
-          options={{headerShown: false}}
-        />
         <Stack.Screen
           name="CheckUser"
           component={CheckUser}

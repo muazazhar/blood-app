@@ -43,7 +43,7 @@ const Settings = ({navigation}) => {
       uid: user.uid,
       photo: user.photoURL,
     };
-    console.log(userData);
+    // console.log(userData);
     database().ref(`/users/${user.uid}`).set(userData);
   };
 
@@ -182,7 +182,6 @@ const Settings = ({navigation}) => {
               <Switch
                 trackColor={{false: '#767577', true: '#81b0ff'}}
                 thumbColor={isDonor ? '#f23c5a' : '#767577'}
-                ios_backgroundColor="#3e3e3e"
                 onValueChange={() => {
                   setDonor(!isDonor);
                   database().ref(`/users/${user.uid}/isDonor`).set(!isDonor);

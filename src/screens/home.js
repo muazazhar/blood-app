@@ -172,17 +172,21 @@ const Home = ({navigation}) => {
       </View>
       <View style={styles.section2}>
         <TouchableOpacity onPress={() => alert('Home')} activeOpacity={1}>
-          <Icon size={(windowWidth * 10) / 100} color="black" name="home" />
+          <Icon size={(windowWidth * 10) / 100} color="#e32b49" name="home" />
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => navigation.navigate('Search')}
           activeOpacity={1}>
-          <Icon size={(windowWidth * 10) / 100} color="black" name="search1" />
+          <Icon
+            size={(windowWidth * 10) / 100}
+            color="#e32b49"
+            name="search1"
+          />
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => navigation.navigate('Settings')}
           activeOpacity={1}>
-          <User size={(windowWidth * 10) / 100} color="black" name="user" />
+          <User size={(windowWidth * 10) / 100} color="#e32b49" name="user" />
         </TouchableOpacity>
       </View>
     </View>
