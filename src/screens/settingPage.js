@@ -26,6 +26,13 @@ const Settings = ({navigation}) => {
   const [age, setAge] = useState('10');
   const [isDonor, setDonor] = useState(false);
   const user = auth().currentUser;
+  database()
+    .ref(`/users/${user.uid}/isDonor`)
+    .on('value', (snapshot) => {
+      const data = snapshot.val();
+      setDonor(data);
+      console.log(data, 'dads');
+    });
 
   const save_data = () => {
     let userData = {
@@ -40,7 +47,6 @@ const Settings = ({navigation}) => {
       uid: user.uid,
       photo: user.photoURL,
     };
-    // console.log(userData);
     database().ref(`/users/${user.uid}`).set(userData);
   };
 
@@ -56,7 +62,6 @@ const Settings = ({navigation}) => {
     <View style={styles.container}>
       <View
         style={{
-          //   backgroundColor: 'red',
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'space-around',
@@ -171,7 +176,6 @@ const Settings = ({navigation}) => {
             <View
               style={{
                 flexDirection: 'row',
-                // backgroundColor: 'red',
                 width: '100%',
                 marginTop: 10,
               }}>
@@ -205,8 +209,6 @@ export default Settings;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: '#fda1b0',
-    // alignItems: 'center',
     justifyContent: 'space-evenly',
   },
   heroTxt: {
@@ -233,10 +235,7 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   input: {
-    // borderColor: '#000',
     width: '100%',
-    // marginBottom: 10,
-    // width: 250,
     borderBottomWidth: 1,
     borderBottomColor: '#1e2d50',
     fontSize: 17,
@@ -246,11 +245,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 22,
-    // backgroundColor: 'red',
   },
   modalView: {
     width: '80%',
-    // height: '80%',
     height: (windowHeight / 100) * 75,
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -274,13 +271,11 @@ const styles = StyleSheet.create({
     fontSize: 25,
   },
   modalText: {
-    // marginBottom: 15,
     fontSize: 18,
     textAlign: 'center',
   },
   userData: {
     alignItems: 'center',
-    // backgroundColor: 'red',
   },
   profilePic: {
     height: 60,

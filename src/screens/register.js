@@ -48,12 +48,12 @@ const SignUp = () => {
           uid: data.user.uid,
           email: data.user.email,
           photo: data.user.photoURL,
-          // phoneNumber: '000',
-          // gender: 'male',
-          // bloodType: 'O -',
-          // location: 'fsd',
-          // age: 20,
-          // isDonor: false,
+          phoneNumber: '000',
+          gender: 'Male',
+          bloodType: 'O-',
+          location: 'Faisalabad',
+          age: 20,
+          isDonor: false,
         };
         console.log('user>>', User);
         database().ref('/').child(`users/${User.uid}`).set(User);
@@ -80,7 +80,6 @@ const SignUp = () => {
           </Text>
           <TouchableOpacity
             style={styles.nextArrow}
-            // onPress={() => navigation.navigate('Verification')}
             onPress={fbLogin}
             activeOpacity={0.9}>
             <Icon size={40} color="white" name="facebook" />
@@ -111,7 +110,6 @@ const styles = StyleSheet.create({
     flex: 2,
     backgroundColor: '#fafafa',
     width: '100%',
-    // alignContent: 'flex-end',
     alignItems: 'center',
   },
   section3: {
@@ -136,10 +134,8 @@ const styles = StyleSheet.create({
     elevation: 15,
   },
   input: {
-    // borderColor: '#000',
     width: '100%',
     marginBottom: 10,
-    // width: 250,
     borderBottomWidth: 1,
     borderBottomColor: '#1e2d50',
     fontSize: 17,
@@ -147,7 +143,6 @@ const styles = StyleSheet.create({
   otpText: {
     fontSize: 35,
     color: '#ffffff',
-    // width: 200,
     fontFamily: 'sans-serif-light',
   },
   nextArrow: {
@@ -168,18 +163,9 @@ const styles = StyleSheet.create({
     shadowRadius: 16.0,
 
     elevation: 24,
-    // left: 'auto',
   },
   wave: {
     width: '100%',
-    // height: 90,
-    // flex: 1,
-    // position: 'absolute',
-    // bottom: 0,
-    // zIndex: 5,
     marginTop: windowHeight / 3.7,
-    // alignSelf: '',
-    // alignContent: 'space-between',
-    // alignItems: 'baseline',
   },
 });

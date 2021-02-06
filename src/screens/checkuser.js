@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import auth from '@react-native-firebase/auth';
 import Register from '../screens/register';
 import Home from '../screens/home';
-// import Settings from '../screens/settingPage';
 
 const CheckUser = (props) => {
   // Set an initializing state whilst Firebase connects

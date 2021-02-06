@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -7,26 +7,27 @@ import {
   TextInput,
   TouchableOpacity,
   Dimensions,
-  Button,
   Image,
   ActivityIndicator,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import auth from '@react-native-firebase/auth';
+import SearchIcon from 'react-native-vector-icons/AntDesign';
 import database from '@react-native-firebase/database';
-const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 
 const Search = ({navigation}) => {
   const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [location, setLocation] = useState('Faisalabad');
 
-  useEffect(() => {
+  const searchBlood = (bloodType) => {
+    console.log(bloodType, 'bloodType');
+    setIsLoading(true);
     const donorsData = [];
     database()
       .ref('users')
-      .orderByChild('isDonor')
-      .equalTo(true)
+      .orderByChild('bloodType')
+      .equalTo(bloodType)
       .once('value')
       .then((results) => {
         results.forEach((snapshot) => {
@@ -35,8 +36,38 @@ const Search = ({navigation}) => {
         setData(donorsData);
         console.log('afffter', donorsData);
         setIsLoading(false);
+        if (donorsData == '') {
+          alert(`No Donor Available with ${bloodType} type`);
+        }
+      })
+      .catch(() => {
+        alert('no data found');
       });
-  }, []);
+  };
+  const searchLocation = (location) => {
+    console.log(location);
+    setIsLoading(true);
+    const donorsData = [];
+    database()
+      .ref('users')
+      .orderByChild('location')
+      .equalTo(location)
+      .once('value')
+      .then((results) => {
+        results.forEach((snapshot) => {
+          donorsData.push(snapshot.val());
+        });
+        setData(donorsData);
+        console.log('afffter', donorsData);
+        setIsLoading(false);
+        if (donorsData == '') {
+          alert(`No Donor Available with at ${location}`);
+        }
+      })
+      .catch((ee) => {
+        console.log(ee, 'eerr');
+      });
+  };
   if (isLoading) {
     return (
       <View style={{flex: 1, justifyContent: 'center'}}>
@@ -48,11 +79,9 @@ const Search = ({navigation}) => {
     <View style={styles.container}>
       <View
         style={{
-          //   backgroundColor: 'yellow',
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'space-around',
-          //   marginTop: -50,
           flex: 0.8,
         }}>
         <TouchableOpacity
@@ -64,22 +93,22 @@ const Search = ({navigation}) => {
       </View>
       <View
         style={{
-          //   backgroundColor: 'yellow',
           alignItems: 'center',
           flex: 2.2,
         }}>
         <Text style={{fontSize: 25, fontFamily: 'monospace'}}>
-          Search with blood type
+          Search with Blood Group
         </Text>
         <View
           style={{
             flexDirection: 'row',
             flexWrap: 'wrap',
-            // backgroundColor: 'yellow',
             width: '90%',
             justifyContent: 'space-evenly',
           }}>
-          <TouchableOpacity activeOpacity={0.9}>
+          <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={() => searchBlood('A+')}>
             <View style={{...styles.blood, borderRadius: 20}}>
               <Text
                 style={{
@@ -90,7 +119,9 @@ const Search = ({navigation}) => {
               </Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity activeOpacity={0.9}>
+          <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={() => searchBlood('A-')}>
             <View style={{...styles.blood, borderRadius: 20}}>
               <Text
                 style={{
@@ -101,7 +132,9 @@ const Search = ({navigation}) => {
               </Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity activeOpacity={0.9}>
+          <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={() => searchBlood('B+')}>
             <View style={{...styles.blood, borderRadius: 20}}>
               <Text
                 style={{
@@ -112,7 +145,9 @@ const Search = ({navigation}) => {
               </Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity activeOpacity={0.9}>
+          <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={() => searchBlood('B-')}>
             <View style={{...styles.blood, borderRadius: 20}}>
               <Text
                 style={{
@@ -123,7 +158,9 @@ const Search = ({navigation}) => {
               </Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity activeOpacity={0.9}>
+          <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={() => searchBlood('O+')}>
             <View style={{...styles.blood, borderRadius: 20}}>
               <Text
                 style={{
@@ -134,7 +171,9 @@ const Search = ({navigation}) => {
               </Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity activeOpacity={0.9}>
+          <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={() => searchBlood('O-')}>
             <View style={{...styles.blood, borderRadius: 20}}>
               <Text
                 style={{
@@ -145,7 +184,9 @@ const Search = ({navigation}) => {
               </Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity activeOpacity={0.9}>
+          <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={() => searchBlood('AB+')}>
             <View style={{...styles.blood, borderRadius: 20}}>
               <Text
                 style={{
@@ -156,7 +197,9 @@ const Search = ({navigation}) => {
               </Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity activeOpacity={0.9}>
+          <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={() => searchBlood('AB-')}>
             <View style={{...styles.blood, borderRadius: 20}}>
               <Text
                 style={{
@@ -171,7 +214,41 @@ const Search = ({navigation}) => {
       </View>
       <View
         style={{
-          //   backgroundColor: 'red',
+          marginTop: '15%',
+        }}>
+        <Text
+          style={{fontSize: 25, fontFamily: 'monospace', textAlign: 'center'}}>
+          Search with Location
+        </Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            padding: 10,
+            justifyContent: 'space-between',
+          }}>
+          <TextInput
+            style={styles.input}
+            placeholder="Location"
+            keyboardType="phone-pad"
+            textAlign={'center'}
+            selectionColor="#1e2d50"
+            value={location}
+            onChangeText={(e) => setLocation(e)}
+          />
+          <TouchableOpacity
+            onPress={() => searchLocation(location)}
+            activeOpacity={1}
+            style={styles.search}>
+            <SearchIcon
+              size={(windowWidth * 10) / 100}
+              color="#fff"
+              name="search1"
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
+      <View
+        style={{
           alignItems: 'center',
           flex: 5,
         }}>
@@ -254,5 +331,27 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     borderWidth: 5,
     borderColor: '#fff',
+  },
+  input: {
+    width: '80%',
+    borderBottomWidth: 1,
+    borderBottomColor: '#1e2d50',
+    fontSize: 17,
+  },
+  search: {
+    height: 60,
+    width: 60,
+    backgroundColor: '#f23c5a',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 50,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 2,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 5.62,
+    elevation: 4,
   },
 });

@@ -4,13 +4,11 @@ import {
   View,
   Text,
   ScrollView,
-  TextInput,
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import User from 'react-native-vector-icons/Feather';
-import auth from '@react-native-firebase/auth';
 import DonorCard from '../assets/donorCard.svg';
 import Booking from '../assets/Booking.svg';
 import Donate from '../assets/donate.svg';
@@ -68,7 +66,6 @@ const Home = ({navigation}) => {
                 <View
                   style={{
                     flex: 1,
-                    // backgroundColor: '#ffbdc8',
                     borderRadius: 20,
                   }}>
                   <Booking />
@@ -105,7 +102,7 @@ const Home = ({navigation}) => {
           <TouchableOpacity
             style={styles.cardSmall}
             activeOpacity={1}
-            onPress={() => alert('Coming Soon... ')}>
+            onPress={() => navigation.navigate('Order')}>
             <Text>Order Blood</Text>
             <User
               size={(windowWidth * 10) / 100}
@@ -119,7 +116,6 @@ const Home = ({navigation}) => {
             <View
               style={{
                 flex: 2.5,
-                // backgroundColor: 'yellow',
               }}>
               <Text
                 style={{
@@ -162,7 +158,6 @@ const Home = ({navigation}) => {
             <View
               style={{
                 flex: 1,
-                // backgroundColor: 'red',
                 marginRight: 10,
               }}>
               <Drive />
@@ -222,7 +217,6 @@ const styles = StyleSheet.create({
   section4: {
     flex: 4,
     backgroundColor: '#f0f0f0',
-    // backgroundColor: 'black',
   },
 
   card: {
@@ -232,19 +226,15 @@ const styles = StyleSheet.create({
     marginVertical: 35,
     backgroundColor: '#f7f7f7',
     borderRadius: 25,
-    // opacity: 0.9,
     top: -15,
     padding: 15,
     flexDirection: 'row',
   },
   heroTxt: {
-    // backgroundColor: 'yellow',
-    // width: '40%',
     color: '#f5627a',
     fontSize: 26,
     fontWeight: 'bold',
     fontFamily: 'monospace',
-    // letterSpacing: 2,
   },
   cardsView: {
     backgroundColor: '#fcfcfc',
