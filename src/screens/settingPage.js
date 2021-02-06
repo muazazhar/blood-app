@@ -10,6 +10,7 @@ import {
   Dimensions,
   Image,
   Switch,
+  ToastAndroid,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import SettingSvg from '../assets/setting.svg';
@@ -31,7 +32,6 @@ const Settings = ({navigation}) => {
     .on('value', (snapshot) => {
       const data = snapshot.val();
       setDonor(data);
-      console.log(data, 'dads');
     });
 
   const save_data = () => {
@@ -55,7 +55,7 @@ const Settings = ({navigation}) => {
       .signOut()
       .then(() => {
         navigation.navigate('CheckUser');
-        console.log('User signed out!');
+        ToastAndroid.show('User signed out !', ToastAndroid.LONG);
       });
   };
   return (

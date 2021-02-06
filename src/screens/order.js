@@ -27,7 +27,6 @@ const Order = ({navigation}) => {
           donorsData.push(snapshot.val());
         });
         setData(donorsData);
-        console.log('afffter', donorsData);
         setIsLoading(false);
       });
   }, []);

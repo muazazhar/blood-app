@@ -55,13 +55,10 @@ const SignUp = () => {
           age: 20,
           isDonor: false,
         };
-        console.log('user>>', User);
         database().ref('/').child(`users/${User.uid}`).set(User);
         navigation.navigate('Home');
       })
-      .catch((err) => {
-        console.log('error>>', err);
-      });
+      .catch((err) => {});
   };
 
   return (

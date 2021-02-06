@@ -21,7 +21,6 @@ const Search = ({navigation}) => {
   const [location, setLocation] = useState('Faisalabad');
 
   const searchBlood = (bloodType) => {
-    console.log(bloodType, 'bloodType');
     setIsLoading(true);
     const donorsData = [];
     database()
@@ -34,7 +33,6 @@ const Search = ({navigation}) => {
           donorsData.push(snapshot.val());
         });
         setData(donorsData);
-        console.log('afffter', donorsData);
         setIsLoading(false);
         if (donorsData == '') {
           alert(`No Donor Available with ${bloodType} type`);
@@ -45,7 +43,6 @@ const Search = ({navigation}) => {
       });
   };
   const searchLocation = (location) => {
-    console.log(location);
     setIsLoading(true);
     const donorsData = [];
     database()
@@ -58,15 +55,12 @@ const Search = ({navigation}) => {
           donorsData.push(snapshot.val());
         });
         setData(donorsData);
-        console.log('afffter', donorsData);
         setIsLoading(false);
         if (donorsData == '') {
           alert(`No Donor Available with at ${location}`);
         }
       })
-      .catch((ee) => {
-        console.log(ee, 'eerr');
-      });
+      .catch((ee) => {});
   };
   if (isLoading) {
     return (
