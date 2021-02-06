@@ -21,8 +21,8 @@ const windowHeight = Dimensions.get('window').height;
 const Settings = ({navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [number, setNumber] = useState('');
-  const [gender, setGender] = useState('male');
-  const [bloodType, setBloodType] = useState('O -ve');
+  const [gender, setGender] = useState('Male');
+  const [bloodType, setBloodType] = useState('O-');
   const [location, setLocation] = useState('Faisalabad');
   const [age, setAge] = useState('10');
   const [isDonor, setDonor] = useState(false);
